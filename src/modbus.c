@@ -1,4 +1,7 @@
 #include <string.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include <stddef.h>
 
 #include "modbus.h"
 
@@ -38,7 +41,7 @@ static const uint16_t crc_table[] = {
   do {                                                                         \
     if (settings->on_##FOR) {                                                  \
       if (settings->on_##FOR(parser) != 0) {                                   \
-        parser->errno = 1;                                                     \
+        parser->err = 1;                                                       \
       }                                                                        \
     }                                                                          \
   } while (0)
@@ -143,8 +146,8 @@ parse_response(modbus_parser* parser,
 {
   size_t nparsed = 0;
 
-  for (int i = 0; i < len; i++) {
-    if (parser->errno != 0)
+  for (size_t i = 0; i < len; i++) {
+    if (parser->err != 0)
       return nparsed;
 
     /* Update CRC value */
@@ -247,7 +250,7 @@ parse_response(modbus_parser* parser,
         parser->frame_crc += (uint16_t)*data << 8;
         parser->state = s_complete;
         if (parser->frame_crc != parser->calc_crc) {
-          parser->errno = 1; /* TODO: assign right value */
+          parser->err = 1; /* TODO: assign right value */
           CALLBACK_NOTIFY(crc_error);
         }
         CALLBACK_NOTIFY(complete);

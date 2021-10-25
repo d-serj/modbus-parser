@@ -111,7 +111,7 @@ struct modbus_parser
   uint8_t data_len;
   const uint8_t* data;
   // bool crc_error;
-  uint16_t errno;
+  uint16_t err;
 
   /* PUBLIC */
   void* arg;
@@ -158,7 +158,7 @@ struct modbus_query
 
 void modbus_parser_init(modbus_parser* parser, enum modbus_parser_type t);
 
-/* Initialize http_parser_settings members to 0
+/* Initialize modbus_parser_settings members to 0
  */
 void modbus_parser_settings_init(modbus_parser_settings* settings);
 
