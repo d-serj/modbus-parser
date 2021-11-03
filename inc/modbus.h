@@ -1,6 +1,11 @@
 #ifndef MODBUS_H_
 #define MODBUS_H_
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif // __cplusplus
+
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -26,15 +31,15 @@ enum modbus_parser_type
   MODBUS_RESPONSE
 };
 
-#define MODBUS_FUNC_MAP(XX)                                                    \
-  XX(1, READ_COILS, "Read Coils")                                              \
-  XX(2, READ_DISCRETE_IN, "Read Discrete Inputs")                              \
-  XX(3, READ_HOLD_REG, "Read Holding Register")                                \
-  XX(4, READ_IN_REG, "Read Input Register")                                    \
-  XX(5, WRITE_COIL, "Wire Single Coil")                                        \
-  XX(6, WRITE_REG, "Write Single Register")                                    \
-  XX(15, WRITE_COILS, "Write Multiple Coils")                                  \
-  XX(16, WRITE_REGS, "Write Miltiple Registers")
+#define MODBUS_FUNC_MAP(XX)                              \
+  XX(0x01, READ_COILS,       "Read Coils")               \
+  XX(0x02, READ_DISCRETE_IN, "Read Discrete Inputs")     \
+  XX(0x03, READ_HOLD_REG,    "Read Holding Register")    \
+  XX(0x04, READ_IN_REG,      "Read Input Register")      \
+  XX(0x05, WRITE_COIL,       "Write Single Coil")        \
+  XX(0x06, WRITE_REG,        "Write Single Register")    \
+  XX(0x0F, WRITE_COILS,      "Write Multiple Coils")     \
+  XX(0x10, WRITE_REGS,       "Write Miltiple Registers")
 
 enum modbus_func
 {
@@ -186,4 +191,8 @@ uint16_t modbus_calc_crc(const uint8_t* data, size_t sz);
  */
 void modbus_crc_update(uint16_t* crc, uint8_t data);
 
-#endif
+#ifdef __cplusplus
+}
+#endif // __cplusplus
+
+#endif // MODBUS_H_
