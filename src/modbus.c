@@ -162,7 +162,7 @@ parse_response(modbus_parser* parser,
         break;
 
       case s_func:
-        parser->function = (enum modbus_func) * data;
+        parser->function = (enum modbus_func)*data;
         switch (parser->function) {
           case MODBUS_FUNC_READ_COILS:
           case MODBUS_FUNC_READ_DISCRETE_IN:

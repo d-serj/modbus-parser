@@ -5,17 +5,20 @@ project(modbus-parser C)
 add_library(base INTERFACE)
 target_include_directories(base
   INTERFACE
-    inc/
+    ${CMAKE_CURRENT_SOURCE_DIR}/inc/
 )
-target_compile_options(base
-  INTERFACE
-    -std=gnu11
-    -O3
-    -g
-    -fno-omit-frame-pointer
-    -Wall
-    #-Wextra
-)
+
+if (MINGW)
+  target_compile_options(base
+    INTERFACE
+      -std=gnu11
+      -O3
+      -g
+      -fno-omit-frame-pointer
+      -Wall
+      #-Wextra
+  )
+endif()
 
 add_library(modbus-parser
   src/modbus.c

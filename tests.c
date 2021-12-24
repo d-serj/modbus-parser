@@ -332,7 +332,7 @@ test_crc_error(struct modbus_parser* parser,
   assert(parser->function == res[1]);
   assert(parser->addr == UINT16(res[2]));
   assert(parser->qty == UINT16(res[4]));
-  assert(parser->errno != 0); /* TODO: check error value */
+  assert(parser->err != 0); /* TODO: check error value */
 
   TEST_SUCCESS();
 }
